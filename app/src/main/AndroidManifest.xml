@@ -12,6 +12,7 @@
         android:theme="@style/Theme.TMDB"
         tools:targetApi="31">
         <activity
+            android:theme="@style/Theme.TMDB"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
