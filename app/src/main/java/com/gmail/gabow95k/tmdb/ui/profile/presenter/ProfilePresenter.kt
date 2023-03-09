@@ -6,6 +6,7 @@ import com.gmail.gabow95k.tmdb.data.PersonEntity
 import com.gmail.gabow95k.tmdb.room.Characters
 import com.gmail.gabow95k.tmdb.room.Person
 import com.gmail.gabow95k.tmdb.ui.profile.interactor.ProfileInteractor
+import java.util.*
 
 class ProfilePresenter(view: ProfileContract.View?, interactor: ProfileInteractor) :
     BasePresenter<ProfileContract.View?>(view),
@@ -35,7 +36,12 @@ class ProfilePresenter(view: ProfileContract.View?, interactor: ProfileInteracto
             .doOnSubscribe { view!!.showLoader() }
             .doAfterTerminate { view!!.hideLoader() }
             .subscribe({
-                view?.setPerson(it)
+                if (Date().after(it.lastUpdate)) {
+                    getPersonFromAPI()
+                } else {
+                    view?.setPerson(it)
+                }
+
             }) { throwable ->
                 view?.showDialog(processError(throwable))
             })
@@ -62,25 +68,26 @@ class ProfilePresenter(view: ProfileContract.View?, interactor: ProfileInteracto
         val characters: MutableList<Characters> = arrayListOf()
 
         person.characters.forEach {
-            if (it.original_name.isNullOrEmpty() || it.original_name.isNullOrEmpty() || it.first_air_date.isNullOrEmpty()) {
-                println("No available data")
-            } else {
-                characters.add(
-                    Characters(
-                        it.id,
-                        it.backdrop_path,
-                        it.first_air_date,
-                        it.media_type,
-                        it.original_name,
-                        it.overview,
-                        it.poster_path,
-                        it.vote_average,
-                        it.vote_count
-                    )
+            characters.add(
+                Characters(
+                    it.id,
+                    it.backdrop_path,
+                    if (it.first_air_date.isNullOrEmpty()) it.release_date else it.first_air_date,
+                    it.media_type,
+                    if (it.original_name.isNullOrEmpty()) it.original_title else it.original_name,
+                    it.overview,
+                    it.poster_path,
+                    it.vote_average,
+                    it.vote_count
                 )
-            }
+            )
         }.also {
+            val c: Calendar = Calendar.getInstance()
+            c.time = Date()
+            c.add(Calendar.DATE, 30)
+
             val item = Person(
+                c.time,
                 person.id,
                 person.name,
                 person.popularity,

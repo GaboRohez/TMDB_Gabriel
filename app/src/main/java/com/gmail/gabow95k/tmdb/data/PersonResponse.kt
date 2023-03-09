@@ -47,6 +47,9 @@ data class CharactersEntity(
     @SerializedName("first_air_date")
     val first_air_date: String,
     @Expose
+    @SerializedName("release_date")
+    val release_date: String,
+    @Expose
     @SerializedName("genre_ids")
     var genre_ids: List<Integer>,
     @Expose
@@ -67,6 +70,9 @@ data class CharactersEntity(
     @Expose
     @SerializedName("original_name")
     val original_name: String,
+    @Expose
+    @SerializedName("original_title")
+    val original_title: String,
     @Expose
     @SerializedName("overview")
     val overview: String,
