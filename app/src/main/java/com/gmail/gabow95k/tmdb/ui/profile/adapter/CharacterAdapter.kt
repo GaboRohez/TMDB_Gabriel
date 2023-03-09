@@ -1,5 +1,6 @@
 package com.gmail.gabow95k.tmdb.ui.profile.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,10 +10,20 @@ import com.gmail.gabow95k.tmdb.IMAGE_PATH
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ItemCharacterBinding
 import com.gmail.gabow95k.tmdb.room.Characters
+import com.gmail.gabow95k.tmdb.room.Movie
+import java.text.SimpleDateFormat
 
 
-class CharacterAdapter(var context: Context, var list: ArrayList<Characters>) :
+class CharacterAdapter(
+    var context: Context,
+    var list: ArrayList<Characters>,
+    var listener: CharacterIn
+) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
+
+    interface CharacterIn {
+        fun onCharacterClick(movie: Movie)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -20,6 +31,7 @@ class CharacterAdapter(var context: Context, var list: ArrayList<Characters>) :
         )
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.tvName.text = list[position].name
         holder.binding.tvOverview.text = list[position].overview
@@ -30,6 +42,21 @@ class CharacterAdapter(var context: Context, var list: ArrayList<Characters>) :
             .into(holder.binding.ivPoster)
 
         holder.binding.tvRate.text = list[position].voteAverage.toString()
+
+        holder.binding.content.setOnClickListener {
+            val movie = Movie(
+                list[position].id,
+                list[position].name,
+                list[position].overview,
+                12.3,
+                list[position].posterPath,
+                list[position].backdropPath,
+                SimpleDateFormat("yyyy-mm-dd").parse(list[position].firstAirDate)!!,
+                list[position].voteAverage,
+                list[position].voteCount
+            )
+            listener.onCharacterClick(movie)
+        }
     }
 
     override fun getItemCount(): Int {

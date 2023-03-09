@@ -7,11 +7,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.gabow95k.tmdb.R
+import com.gmail.gabow95k.tmdb.addFragment
 import com.gmail.gabow95k.tmdb.app.AppConfig
 import com.gmail.gabow95k.tmdb.base.BaseFragment
 import com.gmail.gabow95k.tmdb.custom.GridSpacingItemDecoration
@@ -21,6 +21,7 @@ import com.gmail.gabow95k.tmdb.custom.filter.FilterOptionsView
 import com.gmail.gabow95k.tmdb.databinding.FragmentMoviesBinding
 import com.gmail.gabow95k.tmdb.room.AppDatabase
 import com.gmail.gabow95k.tmdb.room.Movie
+import com.gmail.gabow95k.tmdb.ui.detail_movie.DetailMovieFragment
 import com.gmail.gabow95k.tmdb.ui.movies.adapter.MovieAdapter
 import com.gmail.gabow95k.tmdb.ui.movies.interactor.MoviesInteractor
 import com.gmail.gabow95k.tmdb.ui.movies.presenter.MoviesContract
@@ -168,7 +169,11 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
     }
 
     override fun onItemClick(movie: Movie) {
-        Toast.makeText(requireContext(), movie.title, Toast.LENGTH_LONG).show()
+        addFragment(
+            requireActivity().supportFragmentManager,
+            DetailMovieFragment.newInstance(movie),
+            R.id.contentFragment
+        )
     }
 
     override fun onFilterSelected(field: String?, value: String?) {

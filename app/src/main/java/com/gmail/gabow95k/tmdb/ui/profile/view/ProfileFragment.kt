@@ -9,19 +9,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.gmail.gabow95k.tmdb.IMAGE_PATH
 import com.gmail.gabow95k.tmdb.R
+import com.gmail.gabow95k.tmdb.addFragment
 import com.gmail.gabow95k.tmdb.app.AppConfig
 import com.gmail.gabow95k.tmdb.base.BaseFragment
 import com.gmail.gabow95k.tmdb.databinding.FragmentProfileBinding
 import com.gmail.gabow95k.tmdb.room.AppDatabase
 import com.gmail.gabow95k.tmdb.room.Characters
+import com.gmail.gabow95k.tmdb.room.Movie
 import com.gmail.gabow95k.tmdb.room.Person
+import com.gmail.gabow95k.tmdb.ui.detail_movie.DetailMovieFragment
 import com.gmail.gabow95k.tmdb.ui.profile.adapter.CharacterAdapter
 import com.gmail.gabow95k.tmdb.ui.profile.interactor.ProfileInteractor
 import com.gmail.gabow95k.tmdb.ui.profile.presenter.ProfileContract
 import com.gmail.gabow95k.tmdb.ui.profile.presenter.ProfilePresenter
 
 class ProfileFragment : BaseFragment<ProfileContract.Presenter, FragmentProfileBinding>(),
-    ProfileContract.View {
+    ProfileContract.View, CharacterAdapter.CharacterIn {
 
     private lateinit var adapter: CharacterAdapter
     private lateinit var list: ArrayList<Characters>
@@ -50,7 +53,7 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter, FragmentProfileB
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setUpRecycler() {
-        adapter = CharacterAdapter(requireContext(), list)
+        adapter = CharacterAdapter(requireContext(), list, this)
 
         binding?.recycler?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recycler?.setHasFixedSize(true)
@@ -72,5 +75,13 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter, FragmentProfileB
         person.characters.let { list.addAll(it) }
 
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onCharacterClick(movie: Movie) {
+        addFragment(
+            requireActivity().supportFragmentManager,
+            DetailMovieFragment.newInstance(movie),
+            R.id.contentFragment
+        )
     }
 }
