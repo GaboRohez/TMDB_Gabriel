@@ -6,4 +6,8 @@
     <string name="photos">Photos</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="retrofit_timeout">The timeout has been exceeded, please retry the request.</string>
+    <string name="retrofit_failure">For the moment the service is not available, please try again later.</string>
+    <string name="accept">Accept</string>
+
 </resources>
