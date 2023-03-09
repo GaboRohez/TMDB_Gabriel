@@ -7,7 +7,7 @@ import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ActivityMainBinding
 import com.gmail.gabow95k.tmdb.setFragment
 import com.gmail.gabow95k.tmdb.ui.movies.view.MoviesFragment
-import com.gmail.gabow95k.tmdb.ui.profile.ProfileFragment
+import com.gmail.gabow95k.tmdb.ui.profile.view.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(),
