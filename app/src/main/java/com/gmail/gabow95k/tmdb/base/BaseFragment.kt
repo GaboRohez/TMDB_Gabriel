@@ -1,10 +1,11 @@
 package com.gmail.gabow95k.tmdb.base
 
-import android.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.custom.CustomLoader
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 
 open class BaseFragment<T, B : ViewBinding> : Fragment(), BaseView {
 
@@ -22,35 +23,23 @@ open class BaseFragment<T, B : ViewBinding> : Fragment(), BaseView {
     }
 
     override fun showDialog(message: String?) {
-        val alertDialog: AlertDialog? = activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.setMessage(message)
-            builder.apply {
-                setPositiveButton(
-                    R.string.accept
-                ) { dialog, _ ->
-                    dialog.dismiss()
-                }
+        MaterialAlertDialogBuilder(requireContext(), R.style.MyMaterialAlertDialog)
+            .setTitle(getString(R.string.alert))
+            .setMessage(message)
+            .setPositiveButton(R.string.accept) { dialog, _ ->
+                dialog.dismiss()
             }
-            builder.create()
-        }
-        alertDialog!!.show()
+            .show()
     }
 
     override fun showDialog(resourceId: Int) {
-        val alertDialog: AlertDialog? = activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.setMessage(getString(resourceId))
-            builder.apply {
-                setPositiveButton(
-                    R.string.accept
-                ) { dialog, _ ->
-                    dialog.dismiss()
-                }
+        MaterialAlertDialogBuilder(requireContext(), R.style.MyMaterialAlertDialog)
+            .setTitle(getString(R.string.alert))
+            .setMessage(getString(resourceId))
+            .setPositiveButton(R.string.accept) { dialog, _ ->
+                dialog.dismiss()
             }
-            builder.create()
-        }
-        alertDialog!!.show()
+            .show()
 
     }
 

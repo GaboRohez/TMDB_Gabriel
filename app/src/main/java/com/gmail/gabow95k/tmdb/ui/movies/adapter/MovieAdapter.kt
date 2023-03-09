@@ -8,6 +8,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.gabow95k.tmdb.IMAGE_PATH
+import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ItemMovieBinding
 import com.gmail.gabow95k.tmdb.room.Movie
 import java.util.*
@@ -30,6 +31,7 @@ class MovieAdapter(var context: Context, var list: ArrayList<Movie>, var listene
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(context)
             .load(IMAGE_PATH + list[position].posterPath)
+            .placeholder(context.getDrawable(R.drawable.placeholder))
             .into(holder.binding.ivMovie)
 
         holder.binding.tvRate.text = list[position].voteAverage.toString()

@@ -18,6 +18,19 @@ class MoviesPresenter(view: MoviesContract.View?, interactor: MoviesInteractor) 
         this.interactor = interactor
     }
 
+    override fun checkIfExistDataInDB(page: Int) {
+        addSubscription(interactor.tableIsEmpty()
+            ?.subscribe({
+                if (it) {
+                    getMoviesFromAPI(page)
+                } else {
+                    getMoviesFromDB()
+                }
+            }) { throwable ->
+                println(throwable.message.toString())
+            })
+    }
+
     override fun getMoviesFromAPI(page: Int) {
         addSubscription(interactor.getMovies(page)
             .doOnSubscribe { view!!.showLoader() }
@@ -66,5 +79,20 @@ class MoviesPresenter(view: MoviesContract.View?, interactor: MoviesInteractor) 
                     println(throwable.message.toString())
                 })
         }
+    }
+
+    private fun getMoviesFromDB() {
+        addSubscription(interactor.getFromDB()
+            .doOnSubscribe { view!!.showLoader() }
+            .doAfterTerminate { view!!.hideLoader() }
+            .subscribe({
+                if (it.isEmpty()) {
+                    view?.noMovies()
+                } else {
+                    view?.setMovies(it)
+                }
+            }) { throwable ->
+                view?.showDialog(processError(throwable))
+            })
     }
 }

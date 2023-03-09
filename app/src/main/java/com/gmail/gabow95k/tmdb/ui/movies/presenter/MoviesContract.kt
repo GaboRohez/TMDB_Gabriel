@@ -15,10 +15,13 @@ interface MoviesContract {
 
     interface Presenter {
         fun getMoviesFromAPI(page: Int)
+        fun checkIfExistDataInDB(page: Int)
     }
 
     interface Interactor {
         fun getMovies(page: Int): Single<Response<MoviesResponse>>
         fun insertList(list: MutableList<Movie>): Completable
+        fun tableIsEmpty(): Single<Boolean>
+        fun getFromDB(): Single<MutableList<Movie>>
     }
 }

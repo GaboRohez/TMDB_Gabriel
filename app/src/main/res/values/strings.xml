@@ -12,5 +12,6 @@
     <string name="common_error">An error occurred, please try again later</string>
     <string name="search">Search</string>
     <string name="no_available">No Available</string>
+    <string name="alert">Alert!</string>
 
 </resources>

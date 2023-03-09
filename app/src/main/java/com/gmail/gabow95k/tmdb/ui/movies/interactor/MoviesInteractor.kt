@@ -27,4 +27,16 @@ class MoviesInteractor(var movieDAO: MovieDAO) : MoviesContract.Interactor {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    override fun tableIsEmpty(): Single<Boolean> {
+        return movieDAO.isEmpty()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getFromDB(): Single<MutableList<Movie>> {
+        return movieDAO.getAll()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

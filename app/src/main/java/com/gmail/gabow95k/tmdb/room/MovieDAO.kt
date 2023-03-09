@@ -7,7 +7,7 @@ import io.reactivex.Single
 @Dao
 interface MovieDAO {
     @Query("SELECT * FROM movies_table ORDER BY title")
-    fun getAll(): Single<List<Movie>>
+    fun getAll(): Single<MutableList<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(product: Movie): Completable
@@ -15,4 +15,6 @@ interface MovieDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertList(products: List<Movie>): Completable
 
+    @Query("SELECT (SELECT COUNT(*) FROM movies_table) == 0")
+    fun isEmpty(): Single<Boolean>
 }

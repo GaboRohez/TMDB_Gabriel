@@ -52,7 +52,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
-        presenter?.getMoviesFromAPI(page)
+        presenter?.checkIfExistDataInDB(page)
         setUpEvents()
     }
 
@@ -111,6 +111,9 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
         binding?.tvNoAvailable?.visibility = View.INVISIBLE
 
         movies.let { list.addAll(it) }
+
+        page = (list.size) / 20
+
         adapter.notifyDataSetChanged()
     }
 
