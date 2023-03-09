@@ -7,4 +7,5 @@
     <color name="blue_primary_light">#01b4e4</color>
     <color name="green">#90cea1</color>
     <color name="colorBackgroundContent">#f5f7f9</color>
+    <color name="gray">#6E6E6E</color>
 </resources>

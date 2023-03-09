@@ -13,5 +13,11 @@
     <string name="search">Search</string>
     <string name="no_available">No Available</string>
     <string name="alert">Alert!</string>
+    <string name="filter_by">Filter by</string>
+    <string name="all_filter">Show All</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="delete_filter">Delete Filter</string>
 
 </resources>

@@ -12,6 +12,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
+import java.util.*
 
 class MoviesInteractor(var movieDAO: MovieDAO) : MoviesContract.Interactor {
     override fun getMovies(page: Int): Single<Response<MoviesResponse>> {
@@ -36,6 +37,24 @@ class MoviesInteractor(var movieDAO: MovieDAO) : MoviesContract.Interactor {
 
     override fun getFromDB(): Single<MutableList<Movie>> {
         return movieDAO.getAll()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getPopular(): Single<MutableList<Movie>> {
+        return movieDAO.getPopulars()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getRated(): Single<MutableList<Movie>> {
+        return movieDAO.getRated()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getUpcoming(date: Date): Single<MutableList<Movie>> {
+        return movieDAO.getUpcoming(date)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

@@ -7,6 +7,7 @@ import com.gmail.gabow95k.tmdb.data.MovieEntity
 import com.gmail.gabow95k.tmdb.room.Movie
 import com.gmail.gabow95k.tmdb.ui.movies.interactor.MoviesInteractor
 import java.text.SimpleDateFormat
+import java.util.*
 
 class MoviesPresenter(view: MoviesContract.View?, interactor: MoviesInteractor) :
     BasePresenter<MoviesContract.View?>(view),
@@ -81,7 +82,7 @@ class MoviesPresenter(view: MoviesContract.View?, interactor: MoviesInteractor) 
         }
     }
 
-    private fun getMoviesFromDB() {
+    override fun getMoviesFromDB() {
         addSubscription(interactor.getFromDB()
             .doOnSubscribe { view!!.showLoader() }
             .doAfterTerminate { view!!.hideLoader() }
@@ -90,6 +91,51 @@ class MoviesPresenter(view: MoviesContract.View?, interactor: MoviesInteractor) 
                     view?.noMovies()
                 } else {
                     view?.setMovies(it)
+                }
+            }) { throwable ->
+                view?.showDialog(processError(throwable))
+            })
+    }
+
+    override fun getPopular() {
+        addSubscription(interactor.getPopular()
+            .doOnSubscribe { view!!.showLoader() }
+            .doAfterTerminate { view!!.hideLoader() }
+            .subscribe({
+                if (it.isEmpty()) {
+                    view?.noMovies()
+                } else {
+                    view?.setMoviesFilter(it)
+                }
+            }) { throwable ->
+                view?.showDialog(processError(throwable))
+            })
+    }
+
+    override fun getRated() {
+        addSubscription(interactor.getRated()
+            .doOnSubscribe { view!!.showLoader() }
+            .doAfterTerminate { view!!.hideLoader() }
+            .subscribe({
+                if (it.isEmpty()) {
+                    view?.noMovies()
+                } else {
+                    view?.setMoviesFilter(it)
+                }
+            }) { throwable ->
+                view?.showDialog(processError(throwable))
+            })
+    }
+
+    override fun getUpcoming(date: Date) {
+        addSubscription(interactor.getUpcoming(date)
+            .doOnSubscribe { view!!.showLoader() }
+            .doAfterTerminate { view!!.hideLoader() }
+            .subscribe({
+                if (it.isEmpty()) {
+                    view?.noMovies()
+                } else {
+                    view?.setMoviesFilter(it)
                 }
             }) { throwable ->
                 view?.showDialog(processError(throwable))

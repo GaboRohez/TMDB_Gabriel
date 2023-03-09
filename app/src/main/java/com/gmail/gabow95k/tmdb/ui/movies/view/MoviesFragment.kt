@@ -15,6 +15,9 @@ import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.app.AppConfig
 import com.gmail.gabow95k.tmdb.base.BaseFragment
 import com.gmail.gabow95k.tmdb.custom.GridSpacingItemDecoration
+import com.gmail.gabow95k.tmdb.custom.filter.FilterItemListener
+import com.gmail.gabow95k.tmdb.custom.filter.FilterOption
+import com.gmail.gabow95k.tmdb.custom.filter.FilterOptionsView
 import com.gmail.gabow95k.tmdb.databinding.FragmentMoviesBinding
 import com.gmail.gabow95k.tmdb.room.AppDatabase
 import com.gmail.gabow95k.tmdb.room.Movie
@@ -22,14 +25,16 @@ import com.gmail.gabow95k.tmdb.ui.movies.adapter.MovieAdapter
 import com.gmail.gabow95k.tmdb.ui.movies.interactor.MoviesInteractor
 import com.gmail.gabow95k.tmdb.ui.movies.presenter.MoviesContract
 import com.gmail.gabow95k.tmdb.ui.movies.presenter.MoviesPresenter
-
+import java.util.*
 
 class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBinding>(),
     MoviesContract.View,
-    MovieAdapter.MovieIn {
+    MovieAdapter.MovieIn, FilterItemListener {
 
     var page = 1
     private var readyToLoad = false
+    private var enableToRequestAPI: Boolean = true
+    private lateinit var filterOptionsView: FilterOptionsView
     var interactor =
         MoviesInteractor(AppDatabase.getInstance(AppConfig.getAppContext()!!)!!.movieDAO()!!)
     private lateinit var adapter: MovieAdapter
@@ -52,8 +57,38 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
+        setUpFilterOptions()
         presenter?.checkIfExistDataInDB(page)
         setUpEvents()
+    }
+
+    private fun setUpFilterOptions() {
+
+        val filterOptions = listOf(
+            FilterOption(
+                "all",
+                getString(R.string.all_filter),
+                null
+            ),
+            FilterOption(
+                "popular",
+                getString(R.string.most_popular),
+                null
+            ),
+            FilterOption(
+                "rated",
+                getString(R.string.top_rated),
+                null
+            ),
+            FilterOption(
+                "upcoming",
+                getString(R.string.upcoming),
+                null
+            ),
+            FilterOption("delete_filter", getString(R.string.delete_filter), null)
+        )
+
+        filterOptionsView = FilterOptionsView(requireContext(), filterOptions, this)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -69,6 +104,10 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
     }
 
     private fun setUpEvents() {
+        binding?.btnFilter?.setOnClickListener {
+            filterOptionsView.show()
+        }
+
         binding?.etSearch?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -84,7 +123,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
         binding!!.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) {
+                if (dy > 0 && enableToRequestAPI) {
                     val visibleItemCount: Int = binding!!.recycler.layoutManager!!.childCount
                     val totalItemCount: Int = binding!!.recycler.layoutManager!!.itemCount
                     val pastVisibleItems =
@@ -95,7 +134,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
                         if (visibleItemCount + pastVisibleItems >= totalItemCount) {
                             readyToLoad = false
 
-                            page += 1
+                            page = (totalItemCount / 20) + 1
                             presenter?.getMoviesFromAPI(page)
                         }
 
@@ -112,16 +151,49 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
 
         movies.let { list.addAll(it) }
 
-        page = (list.size) / 20
+        adapter.notifyDataSetChanged()
+    }
 
+    override fun setMoviesFilter(movies: MutableList<Movie>) {
+        list.clear()
+        movies.let { list.addAll(it) }
         adapter.notifyDataSetChanged()
     }
 
     override fun noMovies() {
+        list.clear()
+        adapter.notifyDataSetChanged()
+
         binding?.tvNoAvailable?.visibility = View.VISIBLE
     }
 
     override fun onItemClick(movie: Movie) {
         Toast.makeText(requireContext(), movie.title, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onFilterSelected(field: String?, value: String?) {
+        when (field) {
+            "all" -> {
+                enableToRequestAPI = true
+                presenter?.getMoviesFromDB()
+            }
+            "popular" -> {
+                enableToRequestAPI = false
+                presenter?.getPopular()
+            }
+            "rated" -> {
+                enableToRequestAPI = false
+                presenter?.getRated()
+            }
+            "upcoming" -> {
+                enableToRequestAPI = false
+                presenter?.getUpcoming(Date())
+            }
+            "delete_filter" -> {
+                enableToRequestAPI = true
+                presenter?.getMoviesFromDB()
+            }
+        }
+        filterOptionsView.hide()
     }
 }
