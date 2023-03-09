@@ -9,5 +9,8 @@
     <string name="retrofit_timeout">The timeout has been exceeded, please retry the request.</string>
     <string name="retrofit_failure">For the moment the service is not available, please try again later.</string>
     <string name="accept">Accept</string>
+    <string name="common_error">An error occurred, please try again later</string>
+    <string name="search">Search</string>
+    <string name="no_available">No Available</string>
 
 </resources>

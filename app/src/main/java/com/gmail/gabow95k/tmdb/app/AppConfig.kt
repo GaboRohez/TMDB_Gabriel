@@ -30,5 +30,8 @@ class AppConfig : Application() {
     class AndroidResourceManager(private val resources: Resources) {
         val stringAppName: String
             get() = resources.getString(R.string.app_name)
+
+        val getCommonError: String
+            get() = resources.getString(R.string.common_error)
     }
 }

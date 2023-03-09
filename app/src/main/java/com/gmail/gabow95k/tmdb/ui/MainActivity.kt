@@ -3,15 +3,14 @@ package com.gmail.gabow95k.tmdb.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ActivityMainBinding
 import com.gmail.gabow95k.tmdb.setFragment
-import com.gmail.gabow95k.tmdb.ui.movies.MoviesFragment
+import com.gmail.gabow95k.tmdb.ui.movies.view.MoviesFragment
 import com.gmail.gabow95k.tmdb.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedListener,
+class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
@@ -21,6 +20,7 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.appBarMain.toolbar)
 
         setUpBottomNavigation()
 
@@ -39,27 +39,8 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
     }
 
     private fun setUpEvents() {
-        supportFragmentManager.addOnBackStackChangedListener(this)
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
-
-    }
-
-    override fun onBackStackChanged() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-
-            val tagName: String? =
-                supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
-
-            when (supportFragmentManager.findFragmentByTag(tagName)) {
-                is ProfileFragment -> {
-                    setTitle(R.string.profile_menu)
-                }
-                is MoviesFragment -> {
-                    setTitle(R.string.movies)
-                }
-            }
-        }
 
     }
 
@@ -92,4 +73,5 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
             }
         }
     }
+
 }
