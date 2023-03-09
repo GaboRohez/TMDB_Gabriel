@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface TMDBApiService {
 
-    @GET("discover/movie?sort_by=popularity.desc")
+    @GET("discover/movie")
     fun getPopularMovies(
         @Query("api_key") key: String,
         @Query("page") page: Int

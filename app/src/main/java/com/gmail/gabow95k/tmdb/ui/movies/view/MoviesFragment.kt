@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.gabow95k.tmdb.R
+import com.gmail.gabow95k.tmdb.app.AppConfig
 import com.gmail.gabow95k.tmdb.base.BaseFragment
 import com.gmail.gabow95k.tmdb.custom.GridSpacingItemDecoration
-import com.gmail.gabow95k.tmdb.data.MovieEntity
 import com.gmail.gabow95k.tmdb.databinding.FragmentMoviesBinding
+import com.gmail.gabow95k.tmdb.room.AppDatabase
+import com.gmail.gabow95k.tmdb.room.Movie
 import com.gmail.gabow95k.tmdb.ui.movies.adapter.MovieAdapter
 import com.gmail.gabow95k.tmdb.ui.movies.interactor.MoviesInteractor
 import com.gmail.gabow95k.tmdb.ui.movies.presenter.MoviesContract
@@ -28,9 +30,10 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
 
     var page = 1
     private var readyToLoad = false
-    var interactor = MoviesInteractor()
+    var interactor =
+        MoviesInteractor(AppDatabase.getInstance(AppConfig.getAppContext()!!)!!.movieDAO()!!)
     private lateinit var adapter: MovieAdapter
-    private lateinit var list: ArrayList<MovieEntity>
+    private lateinit var list: ArrayList<Movie>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +52,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
-        presenter?.getMovies(page)
+        presenter?.getMoviesFromAPI(page)
         setUpEvents()
     }
 
@@ -93,7 +96,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
                             readyToLoad = false
 
                             page += 1
-                            presenter?.getMovies(page)
+                            presenter?.getMoviesFromAPI(page)
                         }
 
                     }
@@ -102,7 +105,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
         })
     }
 
-    override fun setMovies(movies: List<MovieEntity>) {
+    override fun setMovies(movies: MutableList<Movie>) {
         readyToLoad = true
 
         binding?.tvNoAvailable?.visibility = View.INVISIBLE
@@ -115,7 +118,7 @@ class MoviesFragment : BaseFragment<MoviesContract.Presenter, FragmentMoviesBind
         binding?.tvNoAvailable?.visibility = View.VISIBLE
     }
 
-    override fun onItemClick(movie: MovieEntity) {
-        Toast.makeText(requireContext(), movie.original_title, Toast.LENGTH_LONG).show()
+    override fun onItemClick(movie: Movie) {
+        Toast.makeText(requireContext(), movie.title, Toast.LENGTH_LONG).show()
     }
 }

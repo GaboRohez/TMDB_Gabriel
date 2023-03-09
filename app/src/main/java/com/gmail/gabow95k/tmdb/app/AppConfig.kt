@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import com.gmail.gabow95k.tmdb.R
+import com.gmail.gabow95k.tmdb.room.AppDatabase
 
 class AppConfig : Application() {
 
@@ -21,6 +22,7 @@ class AppConfig : Application() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        AppDatabase.getInstance(context!!)
         resourceManager =
             AndroidResourceManager(
                 resources
