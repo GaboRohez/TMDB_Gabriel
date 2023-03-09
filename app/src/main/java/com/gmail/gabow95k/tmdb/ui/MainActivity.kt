@@ -1,10 +1,14 @@
-package com.gmail.gabow95k.tmdb
+package com.gmail.gabow95k.tmdb.ui
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ActivityMainBinding
+import com.gmail.gabow95k.tmdb.setFragment
+import com.gmail.gabow95k.tmdb.ui.movies.MoviesFragment
+import com.gmail.gabow95k.tmdb.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedListener,
@@ -25,6 +29,8 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
             ProfileFragment(),
             R.id.contentFragment
         )
+
+        setUpEvents()
     }
 
     private fun setUpBottomNavigation() {
@@ -49,6 +55,9 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
                 is ProfileFragment -> {
                     setTitle(R.string.profile_menu)
                 }
+                is MoviesFragment -> {
+                    setTitle(R.string.movies)
+                }
             }
         }
 
@@ -65,6 +74,11 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
                 true
             }
             R.id.navigation_movies -> {
+                setFragment(
+                    this.supportFragmentManager,
+                    MoviesFragment(),
+                    R.id.contentFragment
+                )
                 true
             }
             R.id.navigation_map -> {
