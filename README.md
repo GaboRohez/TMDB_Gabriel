@@ -3,7 +3,7 @@
 
 ----------------------------------------------------------------
 
-MovieDB es una aplicación de cliente para [TMDb](https://www.themoviedb.org) en Android, creada con Kotlin.
+TMDB es una aplicación de cliente para [TMDb](https://www.themoviedb.org) en Android, creada con Kotlin.
 
 [![Master branch](https://travis-ci.com/haroldadmin/MovieDB.svg?branch=master)](https://travis-ci.com/haroldadmin/MovieDB.svg?branch=master)
 
