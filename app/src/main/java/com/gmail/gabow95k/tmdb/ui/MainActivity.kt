@@ -148,9 +148,9 @@ class MainActivity : AppCompatActivity(),
 
     private fun showMessageToPermission() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Location Permission")
-        builder.setMessage("This app requires location permission to function properly.")
-        builder.setPositiveButton("Ok") { _, _ ->
+        builder.setTitle(getString(R.string.location_permission))
+        builder.setMessage(getString(R.string.message_permission))
+        builder.setPositiveButton(getString(R.string.oc)) { _, _ ->
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(),
                 1
             )
         }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
             dialog.dismiss()
         }
         val dialog = builder.create()

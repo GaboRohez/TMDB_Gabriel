@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.gmail.gabow95k.tmdb.COORDINATES
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.FragmentMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,7 +24,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val TAG = "MapsFragment"
 
     val db = Firebase.firestore
-    val collectionRef = db.collection("coordinates")
+    val collectionRef = db.collection(COORDINATES)
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: GoogleMap

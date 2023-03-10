@@ -4,21 +4,21 @@
     android:layout_height="wrap_content"
     android:id="@+id/content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="16dp"
-    app:cardCornerRadius="8dp"
+    android:layout_marginBottom="@dimen/mediumSpace"
+    app:cardCornerRadius="@dimen/smallSpace"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/smallSpace">
 
         <ImageView
             android:id="@+id/ivPoster"
             tools:src="@tools:sample/avatars"
-            android:layout_marginEnd="8dp"
-            android:layout_width="80dp"
-            android:layout_height="130dp" />
+            android:layout_marginEnd="@dimen/smallSpace"
+            android:layout_width="@dimen/imageCharacterWidth"
+            android:layout_height="@dimen/imageCharacterHeight" />
 
         <RelativeLayout
             android:id="@+id/header"
@@ -46,7 +46,7 @@
         <TextView
             android:id="@+id/tvName"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="@dimen/mediumSize"
             android:layout_below="@+id/header"
             tools:text="@tools:sample/full_names"
             android:layout_toEndOf="@+id/ivPoster"
@@ -55,9 +55,9 @@
 
         <TextView
             android:id="@+id/tvOverview"
-            android:textSize="10sp"
+            android:textSize="@dimen/smallSize"
             android:layout_below="@+id/tvName"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/smallSpace"
             tools:text="@tools:sample/full_names"
             android:layout_toEndOf="@+id/ivPoster"
             android:layout_width="wrap_content"

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TMDB</string>
+    <string name="profile_menu">Perfil</string>
+    <string name="movies">Peliculas</string>
+    <string name="map">Mapa</string>
+    <string name="photos">Fotos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="retrofit_timeout">Se ha superado el tiempo de espera, vuelva a intentar la solicitud.</string>
+    <string name="retrofit_failure">Por el momento el servicio no está disponible, inténtalo de nuevo más tarde.</string>
+    <string name="accept">Aceptar</string>
+    <string name="common_error">Ocurrio un error, intente de nuevo mas tarde</string>
+    <string name="search">Buscar</string>
+    <string name="no_available">No Disponible</string>
+    <string name="alert">Alerta!</string>
+    <string name="filter_by">Filtrar po:</string>
+    <string name="all_filter">Mostrar Todos</string>
+    <string name="most_popular">Mas Populares</string>
+    <string name="top_rated">Mejor Calificados</string>
+    <string name="upcoming">Proximos estrenos</string>
+    <string name="delete_filter">Borrar Filtro</string>
+    <string name="release_date">Fecha de lanzamiento: %s</string>
+    <string name="location_message_alert">Localización!</string>
+    <string name="location_saved">Tu localización se guardo</string>
+    <string name="location_updates">Localización Actualizada</string>
+    <string name="location_updates_in_progress">Actualizacion de ubicación en curso</string>
+    <string name="description_notification_channel">Recibe actualizaciones sobre tu ubicación</string>
+    <string name="location_permission">Permiso de localización</string>
+    <string name="message_permission">Esta aplicación requiere permiso de ubicación para funcionar correctamente.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="oc">Ok</string>
+</resources>

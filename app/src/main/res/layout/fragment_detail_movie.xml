@@ -14,19 +14,19 @@
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="@dimen/dimenImageDetailMovieHeight" />
 
     <RelativeLayout
         android:id="@+id/footer"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:paddingStart="@dimen/smallSpace"
+        android:paddingEnd="@dimen/smallSpace"
         android:background="@color/blue_primary_dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/mediumSpace"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
             android:textStyle="bold"
@@ -46,7 +46,7 @@
         <ImageView
             android:id="@+id/ivStar"
             android:src="@drawable/ic_star"
-            android:padding="5dp"
+            android:padding="@dimen/xSmallSpace"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -56,14 +56,14 @@
         android:id="@+id/tvReleaseDate"
         tools:text="Release date: 2 March, 2023"
         android:textColor="@color/blue_primary_light"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/mediumSpace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvOverview"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/mediumSpace"
+        android:layout_marginEnd="@dimen/mediumSpace"
         tools:text="@tools:sample/lorem/random"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

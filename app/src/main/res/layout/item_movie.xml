@@ -18,7 +18,7 @@
         android:background="@color/blue_primary_dark"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="25dp">
+        android:layout_height="@dimen/imageMovieHeight">
 
         <TextView
             android:id="@+id/tvRate"
@@ -32,7 +32,7 @@
         <ImageView
             android:id="@+id/ivStar"
             android:src="@drawable/ic_star"
-            android:padding="5dp"
+            android:padding="@dimen/xSmallSpace"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

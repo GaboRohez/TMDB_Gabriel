@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="grid_layout_margin">8dp</dimen>
+    <dimen name="dimenIconInHeader">100dp</dimen>
+    <dimen name="dimenImageDetailMovieHeight">200dp</dimen>
+    <dimen name="smallSpace">8dp</dimen>
+    <dimen name="mediumSpace">16dp</dimen>
+    <dimen name="xSmallSpace">5dp</dimen>
+    <dimen name="mediumSize">12sp</dimen>
+    <dimen name="bigSize">20sp</dimen>
+    <dimen name="imageProfileWidth">200dp</dimen>
+    <dimen name="imageProfileHeight">250dp</dimen>
+    <dimen name="smallSize">10sp</dimen>
+    <dimen name="imageCharacterWidth">80dp</dimen>
+    <dimen name="imageCharacterHeight">130dp</dimen>
+    <dimen name="imageMovieHeight">25dp</dimen>
+    <dimen name="divisorWidth">64dp</dimen>
+    <dimen name="divisorHeight">2dp</dimen>
 </resources>

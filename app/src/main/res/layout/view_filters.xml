@@ -8,8 +8,8 @@
 
     <View
         android:id="@+id/grayLineView"
-        android:layout_width="64dp"
-        android:layout_height="2dp"
+        android:layout_width="@dimen/divisorWidth"
+        android:layout_height="@dimen/divisorHeight"
         android:layout_gravity="center_horizontal"
         android:background="@color/non_selected" />
 
@@ -17,16 +17,16 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/smallSpace"
         android:text="@string/filter_by"
-        android:textSize="16sp"
+        android:textSize="@dimen/mediumSize"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filtersRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:layout_marginTop="16dp" />
+        android:layout_margin="@dimen/smallSpace"
+        android:layout_marginTop="@dimen/mediumSpace" />
 
 </LinearLayout>

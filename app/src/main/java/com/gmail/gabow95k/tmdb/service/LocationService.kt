@@ -10,6 +10,8 @@ import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.gmail.gabow95k.tmdb.COORDINATES
+import com.gmail.gabow95k.tmdb.LOCATION_CHANEL
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.ui.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,10 +38,10 @@ class LocationService : Service() {
         handler.post(runnable)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Location Updates"
-            val descriptionText = "Receive updates on your location"
+            val name = getString(R.string.location_updates)
+            val descriptionText = getString(R.string.description_notification_channel)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("location_channel", name, importance).apply {
+            val channel = NotificationChannel(LOCATION_CHANEL, name, importance).apply {
                 description = descriptionText
             }
             val notificationManager: NotificationManager =
@@ -59,9 +61,9 @@ class LocationService : Service() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notificationBuilder = NotificationCompat.Builder(this, "location_channel")
-            .setContentTitle("Location Updates")
-            .setContentText("Location updates in progress")
+        val notificationBuilder = NotificationCompat.Builder(this, LOCATION_CHANEL)
+            .setContentTitle(getString(R.string.location_updates))
+            .setContentText(getString(R.string.location_updates_in_progress))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
@@ -86,7 +88,7 @@ class LocationService : Service() {
             "longitude" to longitude,
             "date" to SimpleDateFormat("MMMM dd, yyyy hh:mm:ss").format(Date())
         )
-        db.collection("coordinates")
+        db.collection(COORDINATES)
             .add(coordinates)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "Ubicación guardada con éxito")
@@ -98,10 +100,10 @@ class LocationService : Service() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         val builder: NotificationCompat.Builder =
-            NotificationCompat.Builder(this, "location_channel")
+            NotificationCompat.Builder(this, LOCATION_CHANEL)
                 .setSmallIcon(R.drawable.ic_notify)
-                .setContentTitle("Location!")
-                .setContentText("Your location is saved")
+                .setContentTitle(getString(R.string.location_message_alert))
+                .setContentText(getString(R.string.location_saved))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
 

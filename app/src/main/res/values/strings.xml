@@ -20,5 +20,14 @@
     <string name="upcoming">Upcoming</string>
     <string name="delete_filter">Delete Filter</string>
     <string name="release_date">Release date: %s</string>
+    <string name="location_message_alert">Location!</string>
+    <string name="location_saved">Your location is saved</string>
+    <string name="location_updates">Location Updates</string>
+    <string name="location_updates_in_progress">Location updates in progress</string>
+    <string name="description_notification_channel">Receive updates on your location</string>
+    <string name="location_permission">Location Permission</string>
+    <string name="message_permission">This app requires location permission to function properly.</string>
+    <string name="cancel">Cancel</string>
+    <string name="oc">Ok</string>
 
 </resources>

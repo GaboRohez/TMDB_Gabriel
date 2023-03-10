@@ -20,17 +20,17 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingTop="@dimen/mediumSpace"
+            android:paddingBottom="@dimen/mediumSpace">
 
             <TextView
                 android:id="@+id/filterOptionLabelTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="16dp"
+                android:paddingLeft="@dimen/mediumSpace"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
+                android:textSize="@dimen/mediumSize"
                 tools:text="@tools:sample/full_names" />
 
         </LinearLayout>
