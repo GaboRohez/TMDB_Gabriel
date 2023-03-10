@@ -1,10 +1,12 @@
 package com.gmail.gabow95k.tmdb.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ActivityMainBinding
+import com.gmail.gabow95k.tmdb.service.LocationService
 import com.gmail.gabow95k.tmdb.setFragment
 import com.gmail.gabow95k.tmdb.ui.movies.view.MoviesFragment
 import com.gmail.gabow95k.tmdb.ui.profile.view.ProfileFragment
@@ -31,6 +33,13 @@ class MainActivity : AppCompatActivity(),
         )
 
         setUpEvents()
+
+        startServiceTrack()
+    }
+
+    private fun startServiceTrack() {
+        val intent = Intent(this, LocationService::class.java)
+        startService(intent)
     }
 
     private fun setUpBottomNavigation() {

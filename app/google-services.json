@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "769836690915",
+    "project_id": "tmdb-bbe2a",
+    "storage_bucket": "tmdb-bbe2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769836690915:android:457a06884dd82a58e5c4d6",
+        "android_client_info": {
+          "package_name": "com.gmail.gabow95k.tmdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769836690915-a5ocmnt3m4fjoslc92151n9kjqeagulf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0YPanXdoJ6HIAAGLucp1YR6NmrdcQinQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769836690915-a5ocmnt3m4fjoslc92151n9kjqeagulf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

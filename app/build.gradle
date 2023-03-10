@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -38,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
     def room_version = "2.4.3"
 
     implementation 'androidx.core:core-ktx:1.9.0'
