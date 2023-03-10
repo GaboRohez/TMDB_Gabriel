@@ -16,4 +16,5 @@
     <dimen name="imageMovieHeight">25dp</dimen>
     <dimen name="divisorWidth">64dp</dimen>
     <dimen name="divisorHeight">2dp</dimen>
+    <dimen name="map_padding">10dp</dimen>
 </resources>

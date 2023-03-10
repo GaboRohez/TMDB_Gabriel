@@ -4,19 +4,22 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
+import android.location.Location
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.gmail.gabow95k.tmdb.COORDINATES
 import com.gmail.gabow95k.tmdb.LOCATION_CHANEL
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.ui.MainActivity
+import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class LocationService : Service() {
 
@@ -24,18 +27,31 @@ class LocationService : Service() {
 
     private val handler = Handler()
     private lateinit var runnable: Runnable
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
+    @SuppressLint("MissingPermission")
     override fun onCreate() {
         super.onCreate()
-        runnable = Runnable {
-            saveLocationToFirestore()
-            handler.postDelayed(runnable, 10000)
-        }
-        handler.post(runnable)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 300000
+        locationRequest.fastestInterval = 300000
+
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    saveLocationToFirestore(locationResult.lastLocation)
+                }
+            },
+            Looper.getMainLooper()
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.location_updates)
@@ -76,11 +92,9 @@ class LocationService : Service() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun saveLocationToFirestore() {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        val latitude = location?.latitude
-        val longitude = location?.longitude
+    private fun saveLocationToFirestore(location: Location) {
+        val latitude = location.latitude
+        val longitude = location.longitude
 
         val db = FirebaseFirestore.getInstance()
         val coordinates = hashMapOf(

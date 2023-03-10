@@ -13,18 +13,18 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private val TAG = "MapsFragment"
 
-    val db = Firebase.firestore
-    val collectionRef = db.collection(COORDINATES)
+    val db = FirebaseFirestore.getInstance()
+    val docRef = db.collection(COORDINATES)
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
     private lateinit var map: GoogleMap
@@ -46,29 +46,25 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setUpEvents() {
-        collectionRef.get().addOnSuccessListener { result ->
-            for (document in result) {
-                Log.d(TAG, "${document.id} => ${document.data}")
-                addMarker(document)
+        docRef.addSnapshotListener { value, e ->
+            if (e != null) {
+                Log.w(TAG, "Error al obtener la colección.", e)
+                return@addSnapshotListener
             }
-        }.addOnFailureListener { exception ->
-            Log.d(TAG, "Error getting documents: ", exception)
-        }
-    }
 
-    private fun addMarker(document: QueryDocumentSnapshot?) {
-        val latitude = document?.getDouble("latitude")
-        val longitude = document?.getDouble("longitude")
-        if (latitude != null && longitude != null) {
-            val marker = LatLng(latitude, longitude)
-            val markerOptions = MarkerOptions().position(marker).title(document.getString("date")!!)
-            map.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    marker,
-                    15f
-                )
-            ) // Change zoom level as desired
-            map.addMarker(markerOptions)
+            for (document in value!!.documentChanges) {
+                if (document.type == DocumentChange.Type.ADDED) {
+                    val data = document.document.data
+                    val latLng = LatLng(data["latitude"] as Double, data["longitude"] as Double)
+                    map.addMarker(MarkerOptions().position(latLng).title(data["date"] as String))
+
+                    val cameraPosition = CameraPosition.Builder()
+                        .target(latLng)
+                        .zoom(19f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
+            }
         }
     }
 

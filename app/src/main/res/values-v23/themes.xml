@@ -13,6 +13,49 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:textViewStyle">@style/TextViewDefaultStyle</item>
+        <item name="cardViewStyle">@style/CardViewDefaultStyle</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TextViewDefaultStyle" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">#454545</item>
+    </style>
+
+    <style name="CardViewDefaultStyle" parent="CardView">
+        <item name="cardBackgroundColor">#FFFFFF</item>
+    </style>
+
+    <style name="EditTextSearch" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/shape_wit_radius</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="TextViewFooterItem" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyMaterialAlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="PositiveButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/blue_primary_dark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>
