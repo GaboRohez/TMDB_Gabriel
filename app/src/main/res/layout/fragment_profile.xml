@@ -52,7 +52,7 @@
         </RelativeLayout>
 
         <TextView
-            android:text="Know for:"
+            android:text="@string/know_for"
             android:layout_marginTop="16dp"
             android:textSize="16sp"
             android:textColor="@color/blue_primary_light"

@@ -55,14 +55,21 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             for (document in value!!.documentChanges) {
                 if (document.type == DocumentChange.Type.ADDED) {
                     val data = document.document.data
-                    val latLng = LatLng(data["latitude"] as Double, data["longitude"] as Double)
-                    map.addMarker(MarkerOptions().position(latLng).title(data["date"] as String))
+                    if (data["latitude"] != null && data["longitude"] != null) {
+                        val latitude = data["latitude"] as Double
+                        val longitude = data["longitude"] as Double
+                        val latLng = LatLng(latitude, longitude)
+                        map.addMarker(
+                            MarkerOptions().position(latLng).title(data["date"] as String)
+                        )
 
-                    val cameraPosition = CameraPosition.Builder()
-                        .target(latLng)
-                        .zoom(19f)
-                        .build()
-                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                        val cameraPosition = CameraPosition.Builder()
+                            .target(latLng)
+                            .zoom(15f)
+                            .build()
+                        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                    }
+
                 }
             }
         }

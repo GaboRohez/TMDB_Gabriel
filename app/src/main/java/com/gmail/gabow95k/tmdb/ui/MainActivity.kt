@@ -14,6 +14,7 @@ import com.gmail.gabow95k.tmdb.service.LocationService
 import com.gmail.gabow95k.tmdb.setFragment
 import com.gmail.gabow95k.tmdb.ui.map.MapsFragment
 import com.gmail.gabow95k.tmdb.ui.movies.view.MoviesFragment
+import com.gmail.gabow95k.tmdb.ui.photos.PhotosFragment
 import com.gmail.gabow95k.tmdb.ui.profile.view.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -108,6 +109,11 @@ class MainActivity : AppCompatActivity(),
                 true
             }
             R.id.navigation_album -> {
+                setFragment(
+                    this.supportFragmentManager,
+                    PhotosFragment(),
+                    R.id.contentFragment
+                )
                 true
             }
             else -> {
