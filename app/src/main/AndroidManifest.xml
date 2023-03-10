@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".app.AppConfig"
         android:allowBackup="false"
@@ -18,11 +20,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAGTwE2avQi9p6kn3FaLHcbX8Nl4T_6m3o" />
+
         <service android:name=".service.LocationService" />
+
         <activity
-            android:theme="@style/Theme.TMDB"
             android:name=".ui.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.TMDB">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

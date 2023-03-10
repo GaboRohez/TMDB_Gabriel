@@ -1,13 +1,18 @@
 package com.gmail.gabow95k.tmdb.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.databinding.ActivityMainBinding
 import com.gmail.gabow95k.tmdb.service.LocationService
 import com.gmail.gabow95k.tmdb.setFragment
+import com.gmail.gabow95k.tmdb.ui.map.MapsFragment
 import com.gmail.gabow95k.tmdb.ui.movies.view.MoviesFragment
 import com.gmail.gabow95k.tmdb.ui.profile.view.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,7 +39,30 @@ class MainActivity : AppCompatActivity(),
 
         setUpEvents()
 
-        startServiceTrack()
+        if (hasLocationPermission()) {
+            startServiceTrack()
+        } else {
+            requestPermission(1)
+        }
+    }
+
+    private fun requestPermission(code: Int) {
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        ActivityCompat.requestPermissions(this, permissions, code)
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun startServiceTrack() {
@@ -72,6 +100,11 @@ class MainActivity : AppCompatActivity(),
                 true
             }
             R.id.navigation_map -> {
+                if (hasLocationPermission()) {
+                    openMaps()
+                } else {
+                    requestPermission(2)
+                }
                 true
             }
             R.id.navigation_album -> {
@@ -83,4 +116,54 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    private fun openMaps() {
+        setFragment(
+            this.supportFragmentManager,
+            MapsFragment(),
+            R.id.contentFragment
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startServiceTrack()
+            } else {
+                showMessageToPermission()
+            }
+        }
+        if (requestCode == 2) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openMaps()
+            } else {
+                showMessageToPermission()
+            }
+        }
+    }
+
+    private fun showMessageToPermission() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Location Permission")
+        builder.setMessage("This app requires location permission to function properly.")
+        builder.setPositiveButton("Ok") { _, _ ->
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                1
+            )
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
 }

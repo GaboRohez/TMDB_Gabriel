@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.gmail.gabow95k.tmdb.R
 import com.gmail.gabow95k.tmdb.ui.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -93,5 +94,17 @@ class LocationService : Service() {
             .addOnFailureListener { e ->
                 Log.e(TAG, "Error al guardar la ubicación", e)
             }
+
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val builder: NotificationCompat.Builder =
+            NotificationCompat.Builder(this, "location_channel")
+                .setSmallIcon(R.drawable.ic_notify)
+                .setContentTitle("Location!")
+                .setContentText("Your location is saved")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+
+        notificationManager.notify(1, builder.build())
     }
 }
